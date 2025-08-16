@@ -1,19 +1,22 @@
 class Solution {
     public int maximum69Number (int num) {
-        String s = Integer.toString(num);
-        int i=0;
-        for(i=0; i<s.length(); i++)
+        int copy = num;
+        int pos = -1;
+        int k = 0;
+        while(copy!=0)
         {
-            if(s.charAt(i)=='6')
+            if(copy%10==6)
             {
-                break;
+                pos = k;
             }
+            copy = copy/10;
+            k++;
         }
-        int k=0;
         int sum = 0;
+        k=0;
         while(num!=0)
         {
-            if(k==s.length()-1-i)
+            if(k==pos)
             {
                 sum+=9*Math.pow(10,k);
             }
