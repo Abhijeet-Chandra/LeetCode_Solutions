@@ -1,30 +1,41 @@
 /**
  * Definition for singly-linked list.
  * public class ListNode {
- *     int val;
- *     ListNode next;
- *     ListNode() {}
- *     ListNode(int val) { this.val = val; }
- *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * int val;
+ * ListNode next;
+ * ListNode() {}
+ * ListNode(int val) { this.val = val; }
+ * ListNode(int val, ListNode next) { this.val = val; this.next = next; }
  * }
  */
 class Solution {
-    public ListNode deleteDuplicates(ListNode head) {
-        if(head==null)return head;
-        ListNode temp1 = head;
-        ListNode temp2 = head;
-        int temp_var = temp1.val;
-        while(temp2!=null)
-        {
-            if(temp2.val!=temp_var)
-            {
-                temp1.next = temp2;
-                temp1 = temp2;
-                temp_var = temp1.val;
-            }
-            temp2 = temp2.next;
+    public int[] nextLargerNodes(ListNode head) {
+        ListNode temp = head;
+        int n = 0;
+        while (temp != null) {
+            temp = temp.next;
+            n++;
         }
-        temp1.next = null;
-        return head;
+        int[] arr = new int[n];
+        temp = head;
+        int j = 0;
+        while (temp != null) {
+            arr[j++] = temp.val;
+            temp = temp.next;
+        }
+        Stack<Integer> st = new Stack<>();
+        for (int i = arr.length - 1; i >= 0; i--) {
+            int curr = arr[i];
+            while (!st.isEmpty() && arr[i] >= st.peek()) {
+                st.pop();
+            }
+            if (st.isEmpty()) {
+                arr[i] = 0;
+            } else {
+                arr[i] = st.peek();
+            }
+            st.push(curr);
+        }
+        return arr;
     }
 }
